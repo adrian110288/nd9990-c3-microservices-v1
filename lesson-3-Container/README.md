@@ -1,3 +1,31 @@
+1. Load the environment variables
+```bash
+export POSTGRESS_USERNAME=myusername;
+export POSTGRESS_PASSWORD=mypassword;
+export POSTGRESS_DB=postgres;
+export POSTGRESS_HOST=udagramdemo.abc4def.us-east-2.rds.amazonaws.com;
+export AWS_REGION=us-east-2;
+export AWS_PROFILE=default;
+export AWS_BUCKET=udagramdemo;
+export JWT_SECRET=helloworld;
+```
+```bash
+source ~/.bash_profile
+```
+Step 2. Build image
+```bash
+docker build -t <your_dockerhub_username_lowercase>/udacity-restapi-user . 
+```
+Step 3. Run your Container
+```bash
+docker run --rm --publish 8080:8080 -v $HOME/.aws:/root/.aws --env POSTGRESS_HOST=$POSTGRESS_HOST --env POSTGRESS_USERNAME=$POSTGRESS_USERNAME --env POSTGRESS_PASSWORD=$POSTGRESS_PASSWORD --env POSTGRESS_DB=$POSTGRESS_DB --env AWS_REGION=$AWS_REGION --env AWS_PROFILE=$AWS_PROFILE --env AWS_BUCKET=$AWS_BUCKET --env JWT_SECRET=$JWT_SECRET --name feed <your_dockerhub_username_lowercase>/udacity-restapi-feed
+```
+Step 4. Verify the Running Container
+```bash
+curl http://localhost:8080/api/v0/feed
+```
+
+
 ## Lesson 3 - Containers
 The exercises in this lesson are an extension of the exercises you have already done in the previous lesson - **"Independent Development"**.  We will use the same "Udagram" project, and convert the monolithic architecture into microservices running in separate containers. We will use Docker to run our application. First, we start with packing our application and afterward we will create an Nginx proxy. Finally, we will use docker-compose to deploy our complete application.  
 
